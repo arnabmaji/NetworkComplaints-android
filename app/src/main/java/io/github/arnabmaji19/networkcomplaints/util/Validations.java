@@ -26,4 +26,16 @@ public class Validations {
         Pattern pattern = Pattern.compile(passwordRegex);
         return pattern.matcher(password).matches();
     }
+
+    public static boolean isContactNumberValid(String contactNumber) {
+        try {
+            Long.parseLong(contactNumber); //check if it contains only integers
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        if (contactNumber.length() == 12 && contactNumber.substring(0, 2).equals("91")) return true;
+        if (contactNumber.length() == 11 && contactNumber.charAt(0) == '0') return true;
+
+        return contactNumber.length() == 10;
+    }
 }
