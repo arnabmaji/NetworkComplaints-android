@@ -24,9 +24,6 @@ public class WelcomeActivity extends AppCompatActivity {
         startActivity(new LogInActivity()); //start LogInActivity
     }
 
-    public void signUpUser(View view) {
-        startActivity(new SignUpActivity()); //start SignUpActivity
-    }
 
     public void switchOfflineMode(View view) {
 

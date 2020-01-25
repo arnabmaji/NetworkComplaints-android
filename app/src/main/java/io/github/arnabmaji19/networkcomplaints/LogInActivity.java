@@ -1,5 +1,6 @@
 package io.github.arnabmaji19.networkcomplaints;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -58,6 +59,10 @@ public class LogInActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public void signUpUser(View view) {
+        startActivity(new Intent(LogInActivity.this, SignUpActivity.class)); //start SignUp activity
     }
 
     private void saveUserCredentials(String email, String password) {

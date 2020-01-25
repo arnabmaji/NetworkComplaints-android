@@ -11,4 +11,6 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="terms_conditions">I agree to the terms and conditions.</string>
     <string name="contact_number">Contact Number</string>
+    <string name="login_signup">Log In or Sign Up</string>
+    <string name="sign_up_prompt">Don\'t have an account\nSign up here!</string>
 </resources>
