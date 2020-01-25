@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Network Complaints</string>
+
+    <!--    WelcomeActivity-->
     <string name="log_in">Log In</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="i_am_offline">I am Offline</string>
+
 </resources>
