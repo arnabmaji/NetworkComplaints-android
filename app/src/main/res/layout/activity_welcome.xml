@@ -24,6 +24,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/round_button"
+            android:onClick="logInUser"
             android:text="@string/log_in"
             android:textAllCaps="false"
             android:textColor="@android:color/background_light" />
@@ -34,6 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:background="@drawable/round_button"
+            android:onClick="signUpUser"
             android:text="@string/sign_up"
             android:textAllCaps="false"
             android:textColor="@android:color/background_light" />
@@ -44,6 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:background="@drawable/round_button"
+            android:onClick="switchOfflineMode"
             android:text="@string/i_am_offline"
             android:textAllCaps="false"
             android:textColor="@android:color/background_light" />

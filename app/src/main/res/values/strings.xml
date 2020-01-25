@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">Network Complaints</string>
 
-    <!--    WelcomeActivity-->
     <string name="log_in">Log In</string>
     <string name="sign_up">Sign Up</string>
     <string name="i_am_offline">I am Offline</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="remember_login">Remember Log In Credentials</string>
 
 </resources>

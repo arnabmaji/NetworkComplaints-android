@@ -1,6 +1,7 @@
 package io.github.arnabmaji19.networkcomplaints;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,5 +11,12 @@ public class LogInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+
+//        ActionBar actionBar = getSupportActionBar();
+//        if(actionBar != null) actionBar.hide(); //hide action bar
+    }
+
+    public void logInExistingUser(View view) {
+
     }
 }
