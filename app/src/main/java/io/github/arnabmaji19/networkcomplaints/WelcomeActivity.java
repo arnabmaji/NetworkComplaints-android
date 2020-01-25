@@ -1,5 +1,6 @@
 package io.github.arnabmaji19.networkcomplaints;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -20,15 +21,19 @@ public class WelcomeActivity extends AppCompatActivity {
 
     public void logInUser(View view) {
         //navigate user to Log In page
-        startActivity(new Intent(WelcomeActivity.this, LogInActivity.class)); //start LogInActivity
-        finish(); //finish the current activity
+        startActivity(new LogInActivity()); //start LogInActivity
     }
 
     public void signUpUser(View view) {
-
+        startActivity(new SignUpActivity()); //start SignUpActivity
     }
 
     public void switchOfflineMode(View view) {
 
+    }
+
+    private void startActivity(Activity activity) {
+        startActivity(new Intent(WelcomeActivity.this, activity.getClass()));
+        finish(); //finish the current activity
     }
 }
