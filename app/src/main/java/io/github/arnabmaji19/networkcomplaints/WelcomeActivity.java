@@ -25,12 +25,12 @@ public class WelcomeActivity extends AppCompatActivity {
     }
 
 
-    public void switchOfflineMode(View view) {
-
-    }
-
     private void startActivity(Activity activity) {
         startActivity(new Intent(WelcomeActivity.this, activity.getClass()));
         finish(); //finish the current activity
+    }
+
+    public void showDashboard(View view) {
+        startActivity(new MainActivity());
     }
 }

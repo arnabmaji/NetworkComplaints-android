@@ -13,4 +13,10 @@
     <string name="contact_number">Contact Number</string>
     <string name="login_signup">Log In or Sign Up</string>
     <string name="sign_up_prompt">Don\'t have an account\nSign up here!</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="my_requests">My Requests</string>
+    <string name="about">About</string>
+    <string name="settings">Settings</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 </resources>
