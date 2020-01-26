@@ -40,4 +40,5 @@
     <string name="longitude">Longitude</string>
     <string name="postal_code">Postal Code</string>
     <string name="state">State</string>
+    <string name="send_statistics_data">Send Statistics Data</string>
 </resources>

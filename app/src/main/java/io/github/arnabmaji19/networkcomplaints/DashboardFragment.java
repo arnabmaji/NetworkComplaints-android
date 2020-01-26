@@ -1,7 +1,9 @@
 package io.github.arnabmaji19.networkcomplaints;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Location;
@@ -26,11 +28,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import io.github.arnabmaji19.networkcomplaints.api.DeviceReportAPI;
+import io.github.arnabmaji19.networkcomplaints.model.DeviceReport;
+import io.github.arnabmaji19.networkcomplaints.model.LocationData;
 import io.github.arnabmaji19.networkcomplaints.model.SimInfo;
 import io.github.arnabmaji19.networkcomplaints.util.LayoutToggler;
 import io.github.arnabmaji19.networkcomplaints.util.LocationDataManager;
 import io.github.arnabmaji19.networkcomplaints.util.PermissionsUtil;
 import io.github.arnabmaji19.networkcomplaints.util.PhoneManager;
+import io.github.arnabmaji19.networkcomplaints.util.Session;
 import io.github.arnabmaji19.networkcomplaints.util.SimCardListAdapter;
 import io.github.arnabmaji19.networkcomplaints.util.WaitDialog;
 
@@ -49,12 +55,15 @@ public class DashboardFragment extends Fragment {
     private TextView stateTextView;
     private Button grantPermissionsButton;
     private Button analyzeButton;
+    private Button sendDataButton;
     private LayoutToggler layoutToggler;
     private WaitDialog waitDialog;
     private PermissionsUtil permissionsUtil;
     private RecyclerView simDetailsRecyclerView;
     private PhoneManager phoneManager;
     private LocationDataManager locationDataManager;
+    private DeviceReport deviceReport;
+    private DeviceReportAPI deviceReportAPI;
 
     public DashboardFragment(Activity activity) {
         this.activity = activity;
@@ -77,6 +86,7 @@ public class DashboardFragment extends Fragment {
         //link views
         grantPermissionsButton = view.findViewById(R.id.grantPermissionsButton);
         analyzeButton = view.findViewById(R.id.analyzeButton);
+        sendDataButton = view.findViewById(R.id.sendDataButton);
         permissionsLayout = view.findViewById(R.id.permissionsLayout);
         dashoardLayout = view.findViewById(R.id.dashboardLayout);
         localDataAlertLayout = view.findViewById(R.id.localDatAlertLayout);
@@ -124,11 +134,13 @@ public class DashboardFragment extends Fragment {
                         simDetailsRecyclerView.setAdapter(simCardListAdapter);
 
                         //update location details
+                        String postalCode = "Unknown";
+                        String state = "Unknown";
                         Address address = locationDataManager.getAddress(location);
                         if (address != null) {
-                            String postalCode = address.getPostalCode();
+                            postalCode = address.getPostalCode();
                             postalCodeTextView.setText(postalCode);
-                            String state = address.getAdminArea();
+                            state = address.getAdminArea();
                             stateTextView.setText(state);
                         }
                         String latitude = location.getLatitude() + "";
@@ -136,9 +148,46 @@ public class DashboardFragment extends Fragment {
                         latitudeTextView.setText(latitude);
                         longitudeTextView.setText(longitude);
 
+                        LocationData locationData = new LocationData(latitude, longitude, postalCode, state);
+                        deviceReport = new DeviceReport(locationData, simInfoList);
+
+
+                        if (Session.getInstance().isSessionAvailable()) { //if session is available, configure api to send data
+                            deviceReportAPI = new DeviceReportAPI(deviceReport);
+
+                            deviceReportAPI.post(); //send post request
+                        }
                         layoutToggler.setVisible(dashoardLayout); //show the dashboard layout
                     }
                 });
+            }
+        });
+
+        sendDataButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Session.getInstance().isSessionAvailable()) { //if session is available send data
+                    deviceReportAPI.post();
+                    return;
+                }
+
+                //If session is not available, prompt the user to save device report
+                AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                builder
+                        .setTitle("Save Device Report")
+                        .setMessage("Looks like you are in offline Mode." +
+                                "\nWould you like to save device report?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                //save device report for future use
+
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, null)
+                        .setCancelable(false);
+                AlertDialog dialog = builder.create();
+                dialog.show();
             }
         });
 
