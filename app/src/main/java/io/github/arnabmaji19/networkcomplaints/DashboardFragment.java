@@ -23,6 +23,7 @@ public class DashboardFragment extends Fragment {
 
     private ConstraintLayout permissionsLayout;
     private ConstraintLayout dashoardLayout;
+    private ConstraintLayout localDataAlertLayout;
     private Button grantPermissionsButton;
     private LayoutToggler layoutToggler;
     private PermissionsUtil permissionsUtil;
@@ -42,6 +43,7 @@ public class DashboardFragment extends Fragment {
         grantPermissionsButton = view.findViewById(R.id.grantPermissionsButton);
         permissionsLayout = view.findViewById(R.id.permissionsLayout);
         dashoardLayout = view.findViewById(R.id.dashboardLayout);
+        localDataAlertLayout = view.findViewById(R.id.localDatAlertLayout);
         //add layouts to layout toggler
         layoutToggler.addLayouts(permissionsLayout, dashoardLayout);
 

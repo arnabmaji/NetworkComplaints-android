@@ -27,4 +27,13 @@
     <string name="ask_permissions">Before we get started,\nwe need some permissions\nto analyze your phone and location.</string>
     <string name="ask_permission_2">Don\'t worry!\nThis doesn\'t include any private data.</string>
     <string name="grant_permissions">Grant Permissions</string>
+    <string name="analyze_device">Analyze Device</string>
+    <string name="local_data_not_found">Oops! We didn\'t find any saved data!\nTry analyzing your device.</string>
+    <string name="sim_details">Sim Details</string>
+
+    <string name="operator_name">Operator Name</string>
+    <string name="network_type">Network Type</string>
+    <string name="signal_strength">Signal Strength</string>
+    <string name="asu_level">ASU Level</string>
+    <string name="unknown">Unknown</string>
 </resources>
