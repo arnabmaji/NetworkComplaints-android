@@ -1,13 +1,13 @@
 package io.github.arnabmaji19.networkcomplaints.util;
 
-import io.github.arnabmaji19.networkcomplaints.model.User;
-
 //Singleton class for managing user sessions
 public class Session {
 
     private static Session instance = new Session();
 
-    private User user;
+    private String username;
+    private String userId;
+    private String email;
     private boolean isSessionAvailable = false;
 
     //private constructor
@@ -18,17 +18,29 @@ public class Session {
         return isSessionAvailable;
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void create(User user) {
-        this.user = user;
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void create(String userId, String username, String email) {
+        this.userId = userId;
+        this.username = username;
+        this.email = email;
         isSessionAvailable = true;
     }
 
     public void clear() {
-        this.user = null;
+        this.userId = null;
+        this.username = null;
+        this.email = null;
         isSessionAvailable = false;
     }
 

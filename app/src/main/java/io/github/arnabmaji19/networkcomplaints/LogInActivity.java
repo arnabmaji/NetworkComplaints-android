@@ -11,7 +11,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import io.github.arnabmaji19.networkcomplaints.api.LogInAPI;
-import io.github.arnabmaji19.networkcomplaints.model.User;
 import io.github.arnabmaji19.networkcomplaints.util.KeyboardHider;
 import io.github.arnabmaji19.networkcomplaints.util.Session;
 import io.github.arnabmaji19.networkcomplaints.util.Validations;
@@ -112,12 +111,19 @@ public class LogInActivity extends AppCompatActivity {
         dialog.show(); //show dialog
         logInAPI.addOnCompleteListener(new LogInAPI.OnCompleteListener() { //set onCompleteListener
             @Override
-            public void onComplete(int statusCode, User user) {
+            public void onComplete(int statusCode, String userId, String username) {
                 dialog.hide(); //hide dialog
                 String message = "";
                 //check status of the server
                 if (statusCode == LogInAPI.STATUS_CODE_SUCCESSFUL) {
                     message = "Log In successful!";
+                    if (rememberLogInCheckBox.isChecked()) {
+                        //if user checks to save log in info
+                        saveUserCredentials(email, password);
+                    }
+                    Session.getInstance().create(userId, username, email);
+                    startActivity(new Intent(LogInActivity.this, MainActivity.class)); //start main activity
+                    finish(); //finish current activity
                 } else if (statusCode == LogInAPI.STATUS_CODE_USER_NOT_REGISTERED) {
                     message = "Email not registered";
                 } else if (statusCode == LogInAPI.STATUS_CODE_INCORRECT_PASSWORD) {
@@ -126,14 +132,6 @@ public class LogInActivity extends AppCompatActivity {
                     message = "Something went wrong!";
                 }
 
-                if (user != null) {
-                    //If user obj is not null, create Session
-                    Session.getInstance().create(user);
-                    if (rememberLogInCheckBox.isChecked()) {
-                        //if user checks to save log in info
-                        saveUserCredentials(email, password);
-                    }
-                }
                 Toast.makeText(LogInActivity.this, message, Toast.LENGTH_SHORT).show();
 
             }

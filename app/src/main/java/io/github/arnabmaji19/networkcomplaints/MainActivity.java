@@ -1,7 +1,9 @@
 package io.github.arnabmaji19.networkcomplaints;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -14,10 +16,11 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
 
-import io.github.arnabmaji19.networkcomplaints.model.User;
 import io.github.arnabmaji19.networkcomplaints.util.Session;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainActivity";
 
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
@@ -34,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navigation_view);
 
         setupNavigationDrawer(); //configure navigation drawer
-        setUserDetailsInNavDrawer(); //update user details in nav drawer
         //set navigation view menu selected listener
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -61,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
         //set dashboard fragment as default fragment
         setFragment(new DashboardFragment(MainActivity.this));
         navigationView.setCheckedItem(R.id.menu_dashboard);
+
+        setUserDetailsInNavDrawer(); //update user details in nav drawer
+
     }
 
     private void setupNavigationDrawer() {
@@ -84,13 +89,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUserDetailsInNavDrawer() {
         Session session = Session.getInstance();
-        //if session is available only then set user details
-        User user = session.getUser();
-        if (user != null) {
-            TextView usernameTextView = findViewById(R.id.navHeaderUsernameTextView);
-            TextView userEmailTextView = findViewById(R.id.navHeaderUserEmailTextView);
-            usernameTextView.setText(user.getName());
-            userEmailTextView.setText(user.getEmail());
+        //if session is available only then set user details in nav drawer header
+        if (session.isSessionAvailable()) {
+            Log.d(TAG, "setUserDetailsInNavDrawer: " + session.getUsername());
+            View headerView = navigationView.getHeaderView(0);
+            TextView usernameTextView = headerView.findViewById(R.id.navHeaderUsernameTextView);
+            TextView userEmailTextView = headerView.findViewById(R.id.navHeaderUserEmailTextView);
+            usernameTextView.setText(session.getUsername());
+            userEmailTextView.setText(session.getEmail());
         }
     }
 }

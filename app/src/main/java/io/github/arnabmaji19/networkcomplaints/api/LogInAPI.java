@@ -2,14 +2,13 @@ package io.github.arnabmaji19.networkcomplaints.api;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import cz.msebera.android.httpclient.Header;
-import io.github.arnabmaji19.networkcomplaints.model.User;
 
 public class LogInAPI extends API {
 
@@ -49,10 +48,19 @@ public class LogInAPI extends API {
                 if (onCompleteListener != null) {
                     //send the user object
                     //TODO: call onComplete method
-                    Gson gson = new Gson();
-                    User user = gson.fromJson(response.toString(), User.class);
+                    Log.d(TAG, "onSuccess: " + response.toString());
+                    String userId = "unknown";
+                    String username = "unknown";
+                    try {
+                        userId = response.getString("user_id");
+                        username = response.getString("name");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
                     if (onCompleteListener != null)
-                        onCompleteListener.onComplete(statusCode, user);
+                        onCompleteListener.onComplete(statusCode, userId, username);
                 }
             }
 
@@ -61,12 +69,12 @@ public class LogInAPI extends API {
                 super.onFailure(statusCode, headers, throwable, errorResponse);
                 Log.d(TAG, "onFailure: " + statusCode);
                 if (onCompleteListener != null)
-                    onCompleteListener.onComplete(statusCode, null);
+                    onCompleteListener.onComplete(statusCode, null, null);
             }
         });
     }
 
     public interface OnCompleteListener {
-        void onComplete(int statusCode, User user);
+        void onComplete(int statusCode, String userId, String username);
     }
 }
