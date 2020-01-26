@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import io.github.arnabmaji19.networkcomplaints.api.LogInAPI;
+import io.github.arnabmaji19.networkcomplaints.model.User;
 import io.github.arnabmaji19.networkcomplaints.util.Validations;
 
 public class LogInActivity extends AppCompatActivity {
@@ -56,7 +58,14 @@ public class LogInActivity extends AppCompatActivity {
         }
 
         //TODO: Log In the user
+        LogInAPI logInAPI = new LogInAPI(email, password);
+        logInAPI.addOnCompleteListener(new LogInAPI.OnCompleteListener() { //set onCompleteListener
+            @Override
+            public void onComplete(User user) {
 
+            }
+        });
+        logInAPI.post(); //send post request
 
 
     }
