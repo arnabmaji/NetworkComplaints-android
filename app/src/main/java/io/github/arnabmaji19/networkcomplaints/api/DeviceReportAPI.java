@@ -1,5 +1,7 @@
 package io.github.arnabmaji19.networkcomplaints.api;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -13,7 +15,7 @@ import io.github.arnabmaji19.networkcomplaints.util.Session;
 public class DeviceReportAPI extends API {
 
     private static final String TAG = "DeviceReportAPI";
-    private static final String RELATIVE_URL = "android/reports";
+    private static final String RELATIVE_URL = "android/netinfo";
 
     private RequestParams params;
     private String url;
@@ -23,6 +25,7 @@ public class DeviceReportAPI extends API {
         params = new RequestParams();
         params.put("user_id", Session.getInstance().getUserId());
         params.put("device_report", new Gson().toJson(deviceReport));
+        Log.d(TAG, "DeviceReportAPI: " + new Gson().toJson(deviceReport));
         url = getUrl(RELATIVE_URL);
     }
 

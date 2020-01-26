@@ -106,7 +106,8 @@ public class DashboardFragment extends Fragment {
 
         if (permissionsUtil.areAllPermissionsGranted()) { //check if all permissions are granted
             if (localDataManager.isLocalDataAvailable()) { //if local data is available show data
-                updateDeviceReportInfo(localDataManager.retrieveDeviceReport());
+                deviceReport = localDataManager.retrieveDeviceReport();
+                updateDeviceReportInfo(deviceReport);
                 initializeDeviceReportAPI(deviceReport); //initialize the api
                 layoutToggler.setVisible(dashoardLayout); //show dashboard layout
             } else {

@@ -41,4 +41,13 @@
     <string name="postal_code">Postal Code</string>
     <string name="state">State</string>
     <string name="send_statistics_data">Send Statistics Data</string>
+    <!--    preferences-->
+    <string name="clear_log_in_pref_key">clear_log_in_pref_key</string>
+    <string name="clear_log_in_pref">Log Out</string>
+    <string name="clear_log_in_pref_sum">Clear your saved log in credentials</string>
+
+    <string name="clear_device_report_pref_key">clear_device_report_pref_key</string>
+    <string name="clear_device_report_pref">Clear Device Report</string>
+    <string name="clear_device_report_pref_sum">Clear your saved device report data</string>
+
 </resources>

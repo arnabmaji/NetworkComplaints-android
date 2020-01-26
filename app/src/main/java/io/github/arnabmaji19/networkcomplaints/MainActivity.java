@@ -1,5 +1,6 @@
 package io.github.arnabmaji19.networkcomplaints;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -48,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.menu_dashboard:
                         selectedFragment = new DashboardFragment(MainActivity.this);
                         break;
+
+                    case R.id.menu_settings:
+                        startActivity(new Intent(MainActivity.this, SettingsActivity.class));
+                        return true;
                 }
 
                 if (selectedFragment != null) {

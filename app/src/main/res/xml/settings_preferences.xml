@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <Preference
+        app:title="@string/clear_log_in_pref"
+        android:summary="@string/clear_log_in_pref_sum"
+        android:key="@string/clear_log_in_pref_key"
+        android:icon="@drawable/ic_people_black_24dp" />
+
+    <Preference
+        app:title="@string/clear_device_report_pref"
+        android:summary="@string/clear_device_report_pref_sum"
+        android:key="@string/clear_device_report_pref_key"
+        android:icon="@drawable/ic_delete_black_24dp" />
+
+</PreferenceScreen>
