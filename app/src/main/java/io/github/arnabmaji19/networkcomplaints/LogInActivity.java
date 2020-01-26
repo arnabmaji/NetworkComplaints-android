@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import io.github.arnabmaji19.networkcomplaints.api.LogInAPI;
 import io.github.arnabmaji19.networkcomplaints.model.User;
+import io.github.arnabmaji19.networkcomplaints.util.KeyboardHider;
 import io.github.arnabmaji19.networkcomplaints.util.Validations;
 import io.github.arnabmaji19.networkcomplaints.util.WaitDialog;
 
@@ -58,6 +59,8 @@ public class LogInActivity extends AppCompatActivity {
             Toast.makeText(this, "Invalid Password", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        KeyboardHider.hideKeyboard(LogInActivity.this); //hide the keyboard
 
         //create dialog
         dialog = new WaitDialog(this);

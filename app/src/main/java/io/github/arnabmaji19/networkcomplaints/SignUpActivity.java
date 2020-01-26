@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import io.github.arnabmaji19.networkcomplaints.api.SignUpAPI;
 import io.github.arnabmaji19.networkcomplaints.model.User;
+import io.github.arnabmaji19.networkcomplaints.util.KeyboardHider;
 import io.github.arnabmaji19.networkcomplaints.util.Validations;
 import io.github.arnabmaji19.networkcomplaints.util.WaitDialog;
 
@@ -87,6 +88,8 @@ public class SignUpActivity extends AppCompatActivity {
             Toast.makeText(this, "Please agree to our terms and conditions", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        KeyboardHider.hideKeyboard(SignUpActivity.this); //hide the keyboard
 
         //create WaitDialog
         dialog = new WaitDialog(this);
