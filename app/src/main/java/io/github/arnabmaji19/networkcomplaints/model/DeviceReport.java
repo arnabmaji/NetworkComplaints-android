@@ -6,15 +6,15 @@ public class DeviceReport {
 
     private String userEmail;
     private LocationData locationData;
-    private List<SimData> simDataList;
+    private List<SimInfo> simInfoList;
 
     public DeviceReport() {
     }
 
-    public DeviceReport(String userEmail, LocationData locationData, List<SimData> simDataList) {
+    public DeviceReport(String userEmail, LocationData locationData, List<SimInfo> simInfoList) {
         this.userEmail = userEmail;
         this.locationData = locationData;
-        this.simDataList = simDataList;
+        this.simInfoList = simInfoList;
     }
 
     public String getUserEmail() {
@@ -33,11 +33,11 @@ public class DeviceReport {
         this.locationData = locationData;
     }
 
-    public List<SimData> getSimDataList() {
-        return simDataList;
+    public List<SimInfo> getSimInfoList() {
+        return simInfoList;
     }
 
-    public void setSimDataList(List<SimData> simDataList) {
-        this.simDataList = simDataList;
+    public void setSimInfoList(List<SimInfo> simInfoList) {
+        this.simInfoList = simInfoList;
     }
 }

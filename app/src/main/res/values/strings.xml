@@ -30,7 +30,7 @@
     <string name="analyze_device">Analyze Device</string>
     <string name="local_data_not_found">Oops! We didn\'t find any saved data!\nTry analyzing your device.</string>
     <string name="sim_details">Sim Details</string>
-
+    <string name="location_details">Location Details</string>
     <string name="operator_name">Operator Name</string>
     <string name="network_type">Network Type</string>
     <string name="signal_strength">Signal Strength</string>
