@@ -18,6 +18,8 @@ import io.github.arnabmaji19.networkcomplaints.util.WaitDialog;
 
 public class LogInActivity extends AppCompatActivity {
 
+    private static final String TAG = "LogInActivity";
+
     private EditText emailEditText;
     private EditText passwordEditText;
     private CheckBox rememberLogInCheckBox;
@@ -72,6 +74,23 @@ public class LogInActivity extends AppCompatActivity {
             @Override
             public void onComplete(int statusCode, User user) {
                 dialog.hide(); //hide dialog
+                String message = "";
+                //check status of the server
+                if (statusCode == LogInAPI.STATUS_CODE_SUCCESSFUL) {
+                    message = "Log In successful!";
+                } else if (statusCode == LogInAPI.STATUS_CODE_USER_NOT_REGISTERED) {
+                    message = "Email not registered";
+                } else if (statusCode == LogInAPI.STATUS_CODE_INCORRECT_PASSWORD) {
+                    message = "Incorrect password";
+                } else if (statusCode == LogInAPI.STATUS_CODE_FAILED) {
+                    message = "Something went wrong!";
+                }
+
+                if (user != null) {
+                    //If user obj is not null, create Session
+
+                }
+                Toast.makeText(LogInActivity.this, message, Toast.LENGTH_SHORT).show();
 
             }
         });

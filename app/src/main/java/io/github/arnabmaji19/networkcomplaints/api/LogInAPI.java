@@ -2,6 +2,7 @@ package io.github.arnabmaji19.networkcomplaints.api;
 
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -48,6 +49,10 @@ public class LogInAPI extends API {
                 if (onCompleteListener != null) {
                     //send the user object
                     //TODO: call onComplete method
+                    Gson gson = new Gson();
+                    User user = gson.fromJson(response.toString(), User.class);
+                    if (onCompleteListener != null)
+                        onCompleteListener.onComplete(statusCode, user);
                 }
             }
 
