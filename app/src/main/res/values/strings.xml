@@ -23,4 +23,8 @@
     <string name="nav_header_username">Anonymous</string>
     <string name="nav_header_user_email">anonymous@mail.com</string>
     <string name="nav_header_user_icon">User Icon</string>
+    <string name="user_greet">Hey there!</string>
+    <string name="ask_permissions">Before we get started,\nwe need some permissions\nto analyze your phone and location.</string>
+    <string name="ask_permission_2">Don\'t worry!\nThis doesn\'t include any private data.</string>
+    <string name="grant_permissions">Grant Permissions</string>
 </resources>
