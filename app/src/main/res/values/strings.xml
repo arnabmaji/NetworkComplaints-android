@@ -20,4 +20,7 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="please_wait">Please Wait&#8230;</string>
+    <string name="nav_header_username">Anonymous</string>
+    <string name="nav_header_user_email">anonymous@mail.com</string>
+    <string name="nav_header_user_icon">User Icon</string>
 </resources>
