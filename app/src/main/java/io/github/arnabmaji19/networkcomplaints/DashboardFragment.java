@@ -3,6 +3,7 @@ package io.github.arnabmaji19.networkcomplaints;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,6 +43,10 @@ public class DashboardFragment extends Fragment {
     private ConstraintLayout dashoardLayout;
     private ConstraintLayout localDataAlertLayout;
     private LinearLayout loadingLayout;
+    private TextView latitudeTextView;
+    private TextView longitudeTextView;
+    private TextView postalCodeTextView;
+    private TextView stateTextView;
     private Button grantPermissionsButton;
     private Button analyzeButton;
     private LayoutToggler layoutToggler;
@@ -75,6 +81,10 @@ public class DashboardFragment extends Fragment {
         dashoardLayout = view.findViewById(R.id.dashboardLayout);
         localDataAlertLayout = view.findViewById(R.id.localDatAlertLayout);
         loadingLayout = view.findViewById(R.id.laodingBar);
+        latitudeTextView = view.findViewById(R.id.latitudeTextView);
+        longitudeTextView = view.findViewById(R.id.longitudeTextView);
+        postalCodeTextView = view.findViewById(R.id.postalCodeTextView);
+        stateTextView = view.findViewById(R.id.stateTextView);
         simDetailsRecyclerView = view.findViewById(R.id.simCardListRecyclerView);
         simDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
         waitDialog = new WaitDialog(activity);
@@ -96,7 +106,7 @@ public class DashboardFragment extends Fragment {
 
         analyzeButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
                 if (!locationDataManager.isGPSEnabled()) { //if gps is not turned on do not request location updates
                     Toast.makeText(activity.getBaseContext(), "Please turn on GPS", Toast.LENGTH_SHORT).show();
                     return;
@@ -112,6 +122,20 @@ public class DashboardFragment extends Fragment {
                         List<SimInfo> simInfoList = phoneManager.getSimInfo(activity.getBaseContext());
                         SimCardListAdapter simCardListAdapter = new SimCardListAdapter(simInfoList);
                         simDetailsRecyclerView.setAdapter(simCardListAdapter);
+
+                        //update location details
+                        Address address = locationDataManager.getAddress(location);
+                        if (address != null) {
+                            String postalCode = address.getPostalCode();
+                            postalCodeTextView.setText(postalCode);
+                            String state = address.getAdminArea();
+                            stateTextView.setText(state);
+                        }
+                        String latitude = location.getLatitude() + "";
+                        String longitude = location.getLongitude() + "";
+                        latitudeTextView.setText(latitude);
+                        longitudeTextView.setText(longitude);
+
                         layoutToggler.setVisible(dashoardLayout); //show the dashboard layout
                     }
                 });
