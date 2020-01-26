@@ -13,8 +13,6 @@ import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
 
-import io.github.arnabmaji19.networkcomplaints.util.DashboardFragment;
-
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;

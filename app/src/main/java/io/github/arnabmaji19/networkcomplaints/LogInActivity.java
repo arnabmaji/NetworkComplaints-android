@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import io.github.arnabmaji19.networkcomplaints.api.LogInAPI;
 import io.github.arnabmaji19.networkcomplaints.model.User;
 import io.github.arnabmaji19.networkcomplaints.util.KeyboardHider;
+import io.github.arnabmaji19.networkcomplaints.util.Session;
 import io.github.arnabmaji19.networkcomplaints.util.Validations;
 import io.github.arnabmaji19.networkcomplaints.util.WaitDialog;
 
@@ -24,11 +25,14 @@ public class LogInActivity extends AppCompatActivity {
     private EditText passwordEditText;
     private CheckBox rememberLogInCheckBox;
     private WaitDialog dialog;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+
+        sharedPreferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
 
         //links views
         emailEditText = findViewById(R.id.email_edittext);
@@ -37,6 +41,18 @@ public class LogInActivity extends AppCompatActivity {
 
 //        ActionBar actionBar = getSupportActionBar();
 //        if(actionBar != null) actionBar.hide(); //hide action bar
+
+        if (hasUserSavedLogInCredentials()) {
+            //if user has saved log in credentials
+            //retrieve log in credentials
+            String email = sharedPreferences.getString("email", null);
+            String password = sharedPreferences.getString("password", null);
+
+            //attempt log in with saved credentials
+            attemptLogIn(email, password);
+
+        }
+
     }
 
     public void logInExistingUser(View view) {
@@ -64,6 +80,30 @@ public class LogInActivity extends AppCompatActivity {
 
         KeyboardHider.hideKeyboard(LogInActivity.this); //hide the keyboard
 
+        //log in the user and check status
+        attemptLogIn(email, password);
+
+    }
+
+    public void signUpUser(View view) {
+        startActivity(new Intent(LogInActivity.this, SignUpActivity.class)); //start SignUp activity
+    }
+
+    private void saveUserCredentials(String email, String password) {
+        //Save user's credentials for future use
+        sharedPreferences
+                .edit()
+                .putString("email", email)
+                .putString("password", password)
+                .apply();
+    }
+
+    private boolean hasUserSavedLogInCredentials() {
+        return sharedPreferences
+                .getString("email", null) != null;
+    }
+
+    private void attemptLogIn(final String email, final String password) {
         //create dialog
         dialog = new WaitDialog(this);
 
@@ -88,28 +128,16 @@ public class LogInActivity extends AppCompatActivity {
 
                 if (user != null) {
                     //If user obj is not null, create Session
-
+                    Session.getInstance().create(user);
+                    if (rememberLogInCheckBox.isChecked()) {
+                        //if user checks to save log in info
+                        saveUserCredentials(email, password);
+                    }
                 }
                 Toast.makeText(LogInActivity.this, message, Toast.LENGTH_SHORT).show();
 
             }
         });
         logInAPI.post(); //send post request
-
-
-    }
-
-    public void signUpUser(View view) {
-        startActivity(new Intent(LogInActivity.this, SignUpActivity.class)); //start SignUp activity
-    }
-
-    private void saveUserCredentials(String email, String password) {
-        //Save user's credentials for future use
-        SharedPreferences preferences = getSharedPreferences(getPackageName(), MODE_PRIVATE);
-        preferences
-                .edit()
-                .putString("email", email)
-                .putString("password", password)
-                .apply();
     }
 }

@@ -1,4 +1,4 @@
-package io.github.arnabmaji19.networkcomplaints.util;
+package io.github.arnabmaji19.networkcomplaints;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import io.github.arnabmaji19.networkcomplaints.R;
 
 public class DashboardFragment extends Fragment {
 
