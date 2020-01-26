@@ -18,8 +18,8 @@ public class SignUpAPI extends API {
 
     //status codes
     public static final int STATUS_CODE_SUCCESSFUL = 200;
-    public static final int STATUS_CODE_EMAIL_ALREADY_REGISTERED = 300;
-    public static final int STATUS_CODE_FAILED = 400;
+    public static final int STATUS_CODE_EMAIL_ALREADY_REGISTERED = 409;
+    public static final int STATUS_CODE_FAILED = 500;
 
 
     private RequestParams params;
@@ -40,12 +40,21 @@ public class SignUpAPI extends API {
 
     @Override
     public void post() {
+        Log.d(TAG, "post: " + this.url);
         //send post request via api
-        client.post(url, params, new JsonHttpResponseHandler() {
+        client.post(this.url, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
                 Log.d(TAG, "onSuccess: " + response);
+                if (onCompleteListener != null)
+                    onCompleteListener.onComplete(statusCode);
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Log.d(TAG, "onFailure: " + statusCode);
                 if (onCompleteListener != null)
                     onCompleteListener.onComplete(statusCode);
             }

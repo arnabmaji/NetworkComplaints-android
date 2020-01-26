@@ -70,7 +70,7 @@ public class LogInActivity extends AppCompatActivity {
         dialog.show(); //show dialog
         logInAPI.addOnCompleteListener(new LogInAPI.OnCompleteListener() { //set onCompleteListener
             @Override
-            public void onComplete(User user) {
+            public void onComplete(int statusCode, User user) {
                 dialog.hide(); //hide dialog
 
             }

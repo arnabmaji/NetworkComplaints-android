@@ -1,5 +1,7 @@
 package io.github.arnabmaji19.networkcomplaints.api;
 
+import android.util.Log;
+
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -15,9 +17,9 @@ public class LogInAPI extends API {
 
     //status codes
     public static final int STATUS_CODE_SUCCESSFUL = 200;
-    public static final int STATUS_CODE_USER_NOT_REGISTERED = 300;
-    public static final int STATUS_CODE_INCORRECT_PASSWORD = 350;
-    public static final int STATUS_CODE_FAILED = 400;
+    public static final int STATUS_CODE_USER_NOT_REGISTERED = 404;
+    public static final int STATUS_CODE_INCORRECT_PASSWORD = 401;
+    public static final int STATUS_CODE_FAILED = 500;
 
     private RequestParams params;
     private String url;
@@ -49,10 +51,17 @@ public class LogInAPI extends API {
                 }
             }
 
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                super.onFailure(statusCode, headers, throwable, errorResponse);
+                Log.d(TAG, "onFailure: " + statusCode);
+                if (onCompleteListener != null)
+                    onCompleteListener.onComplete(statusCode, null);
+            }
         });
     }
 
     public interface OnCompleteListener {
-        void onComplete(User user);
+        void onComplete(int statusCode, User user);
     }
 }

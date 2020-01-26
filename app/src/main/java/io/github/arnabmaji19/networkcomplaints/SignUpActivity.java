@@ -101,9 +101,19 @@ public class SignUpActivity extends AppCompatActivity {
         signUpAPI.addOnCompleteListener(new SignUpAPI.OnCompleteListener() { //adds onCompleteListener
             @Override
             public void onComplete(int statusCode) {
-                Log.d(TAG, "onComplete: ");
+                Log.d(TAG, "onComplete: " + statusCode);
                 dialog.hide(); //hide dialog
                 //further coding
+                String message = "";
+                if (statusCode == SignUpAPI.STATUS_CODE_SUCCESSFUL) {
+                    message = "Account creation successful";
+                } else if (statusCode == SignUpAPI.STATUS_CODE_EMAIL_ALREADY_REGISTERED) {
+                    message = "Email already registered";
+                } else if (statusCode == SignUpAPI.STATUS_CODE_FAILED) {
+                    message = "Something went wrong!";
+                }
+
+                Toast.makeText(SignUpActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
         signUpAPI.post(); //send post request
