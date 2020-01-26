@@ -1,6 +1,7 @@
 package io.github.arnabmaji19.networkcomplaints;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -8,9 +9,13 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import io.github.arnabmaji19.networkcomplaints.api.SignUpAPI;
+import io.github.arnabmaji19.networkcomplaints.model.User;
 import io.github.arnabmaji19.networkcomplaints.util.Validations;
 
 public class SignUpActivity extends AppCompatActivity {
+
+    private static final String TAG = "SignUpActivity";
 
     private EditText usernameEditText;
     private EditText emailEditText;
@@ -81,8 +86,16 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
-        //TODO: Sign up the user
-
-
+        //Sign up the user
+        User user = new User(username, email, contactNumber, password); //create the user object
+        SignUpAPI signUpAPI = new SignUpAPI(user);
+        signUpAPI.addOnCompleteListener(new SignUpAPI.OnCompleteListener() { //adds onCompleteListener
+            @Override
+            public void onComplete(int statusCode) {
+                Log.d(TAG, "onComplete: ");
+                //further coding
+            }
+        });
+        signUpAPI.post(); //send post request
     }
 }
