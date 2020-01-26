@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 //determine the selected fragment
                 switch (menuItem.getItemId()) {
                     case R.id.menu_dashboard:
-                        selectedFragment = new DashboardFragment();
+                        selectedFragment = new DashboardFragment(MainActivity.this);
                         break;
                 }
 
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //set dashboard fragment as default fragment
-        setFragment(new DashboardFragment());
+        setFragment(new DashboardFragment(MainActivity.this));
         navigationView.setCheckedItem(R.id.menu_dashboard);
     }
 
