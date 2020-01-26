@@ -57,4 +57,8 @@ public class LocalDataManager {
     public boolean isLocalDataAvailable() {
         return file.exists();
     }
+
+    public boolean clearLocalData() {
+        return file.delete();
+    }
 }

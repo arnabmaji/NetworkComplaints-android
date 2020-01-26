@@ -33,6 +33,7 @@ import io.github.arnabmaji19.networkcomplaints.model.DeviceReport;
 import io.github.arnabmaji19.networkcomplaints.model.LocationData;
 import io.github.arnabmaji19.networkcomplaints.model.SimInfo;
 import io.github.arnabmaji19.networkcomplaints.util.LayoutToggler;
+import io.github.arnabmaji19.networkcomplaints.util.LocalDataManager;
 import io.github.arnabmaji19.networkcomplaints.util.LocationDataManager;
 import io.github.arnabmaji19.networkcomplaints.util.PermissionsUtil;
 import io.github.arnabmaji19.networkcomplaints.util.PhoneManager;
@@ -62,6 +63,7 @@ public class DashboardFragment extends Fragment {
     private RecyclerView simDetailsRecyclerView;
     private PhoneManager phoneManager;
     private LocationDataManager locationDataManager;
+    private LocalDataManager localDataManager;
     private DeviceReport deviceReport;
     private DeviceReportAPI deviceReportAPI;
 
@@ -82,6 +84,7 @@ public class DashboardFragment extends Fragment {
         phoneManager = new PhoneManager(telephonyManager);
         LocationManager locationManager = (LocationManager) activity.getSystemService(Context.LOCATION_SERVICE);
         locationDataManager = new LocationDataManager(activity, locationManager);
+        localDataManager = new LocalDataManager(activity);
 
         //link views
         grantPermissionsButton = view.findViewById(R.id.grantPermissionsButton);
@@ -101,8 +104,14 @@ public class DashboardFragment extends Fragment {
         //add layouts to layout toggler
         layoutToggler.addLayouts(permissionsLayout, dashoardLayout);
 
-        if (permissionsUtil.areAllPermissionsGranted()) {
-            layoutToggler.setVisible(localDataAlertLayout);
+        if (permissionsUtil.areAllPermissionsGranted()) { //check if all permissions are granted
+            if (localDataManager.isLocalDataAvailable()) { //if local data is available show data
+                updateDeviceReportInfo(localDataManager.retrieveDeviceReport());
+                initializeDeviceReportAPI(deviceReport); //initialize the api
+                layoutToggler.setVisible(dashoardLayout); //show dashboard layout
+            } else {
+                layoutToggler.setVisible(localDataAlertLayout); //else show no local data is available
+            }
         } else {
             layoutToggler.setVisible(permissionsLayout);
         }
@@ -126,37 +135,27 @@ public class DashboardFragment extends Fragment {
                 locationDataManager.requestCurrentLocation(new LocationDataManager.OnSuccessListener() {
                     @Override
                     public void onSuccess(Location location) {
-                        Log.d(TAG, "onSuccess: " + location.getLongitude() + location.getLatitude());
                         loadingLayout.setVisibility(View.GONE); //hide the loading layout
-                        //get sim card info list
-                        List<SimInfo> simInfoList = phoneManager.getSimInfo(activity.getBaseContext());
-                        SimCardListAdapter simCardListAdapter = new SimCardListAdapter(simInfoList);
-                        simDetailsRecyclerView.setAdapter(simCardListAdapter);
 
-                        //update location details
+                        //create device report
                         String postalCode = "Unknown";
                         String state = "Unknown";
                         Address address = locationDataManager.getAddress(location);
                         if (address != null) {
                             postalCode = address.getPostalCode();
-                            postalCodeTextView.setText(postalCode);
                             state = address.getAdminArea();
-                            stateTextView.setText(state);
+
                         }
                         String latitude = location.getLatitude() + "";
                         String longitude = location.getLongitude() + "";
-                        latitudeTextView.setText(latitude);
-                        longitudeTextView.setText(longitude);
-
+                        List<SimInfo> simInfoList = phoneManager.getSimInfo(activity.getBaseContext());
                         LocationData locationData = new LocationData(latitude, longitude, postalCode, state);
                         deviceReport = new DeviceReport(locationData, simInfoList);
 
+                        updateDeviceReportInfo(deviceReport);
 
-                        if (Session.getInstance().isSessionAvailable()) { //if session is available, configure api to send data
-                            deviceReportAPI = new DeviceReportAPI(deviceReport);
 
-                            deviceReportAPI.post(); //send post request
-                        }
+                        initializeDeviceReportAPI(deviceReport);
                         layoutToggler.setVisible(dashoardLayout); //show the dashboard layout
                     }
                 });
@@ -181,7 +180,10 @@ public class DashboardFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //save device report for future use
+                                localDataManager = new LocalDataManager(activity);
+                                localDataManager.saveDeviceReport(deviceReport);
 
+                                Toast.makeText(activity.getBaseContext(), "Device report saved!", Toast.LENGTH_SHORT).show();
                             }
                         })
                         .setNegativeButton(android.R.string.no, null)
@@ -194,6 +196,25 @@ public class DashboardFragment extends Fragment {
         return view;
 
     }
+
+    private void updateDeviceReportInfo(DeviceReport deviceReport) {
+        //get sim card info list
+        SimCardListAdapter simCardListAdapter = new SimCardListAdapter(deviceReport.getSimInfoList());
+        simDetailsRecyclerView.setAdapter(simCardListAdapter); //populate recycler view
+
+        //update location details
+        latitudeTextView.setText(deviceReport.getLocationData().getLatitude());
+        longitudeTextView.setText(deviceReport.getLocationData().getLongitude());
+        postalCodeTextView.setText(deviceReport.getLocationData().getPostalCode());
+        stateTextView.setText(deviceReport.getLocationData().getState());
+    }
+
+    private void initializeDeviceReportAPI(DeviceReport deviceReport) {
+        if (Session.getInstance().isSessionAvailable()) { //if session is available, configure api to send data
+            deviceReportAPI = new DeviceReportAPI(deviceReport);
+        }
+    }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
