@@ -13,12 +13,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import io.github.arnabmaji19.networkcomplaints.api.LogInAPI;
 import io.github.arnabmaji19.networkcomplaints.model.User;
 import io.github.arnabmaji19.networkcomplaints.util.Validations;
+import io.github.arnabmaji19.networkcomplaints.util.WaitDialog;
 
 public class LogInActivity extends AppCompatActivity {
 
     private EditText emailEditText;
     private EditText passwordEditText;
     private CheckBox rememberLogInCheckBox;
+    private WaitDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +59,16 @@ public class LogInActivity extends AppCompatActivity {
             return;
         }
 
-        //TODO: Log In the user
+        //create dialog
+        dialog = new WaitDialog(this);
+
+        //Log In the user
         LogInAPI logInAPI = new LogInAPI(email, password);
+        dialog.show(); //show dialog
         logInAPI.addOnCompleteListener(new LogInAPI.OnCompleteListener() { //set onCompleteListener
             @Override
             public void onComplete(User user) {
+                dialog.hide(); //hide dialog
 
             }
         });

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import io.github.arnabmaji19.networkcomplaints.api.SignUpAPI;
 import io.github.arnabmaji19.networkcomplaints.model.User;
 import io.github.arnabmaji19.networkcomplaints.util.Validations;
+import io.github.arnabmaji19.networkcomplaints.util.WaitDialog;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -23,6 +24,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText passwordEditText;
     private EditText confirmPasswordEditText;
     private CheckBox termsConditionsCheckBox;
+    private WaitDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,13 +88,18 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
+        //create WaitDialog
+        dialog = new WaitDialog(this);
+
         //Sign up the user
         User user = new User(username, email, contactNumber, password); //create the user object
         SignUpAPI signUpAPI = new SignUpAPI(user);
+        dialog.show(); //show dialog
         signUpAPI.addOnCompleteListener(new SignUpAPI.OnCompleteListener() { //adds onCompleteListener
             @Override
             public void onComplete(int statusCode) {
                 Log.d(TAG, "onComplete: ");
+                dialog.hide(); //hide dialog
                 //further coding
             }
         });
