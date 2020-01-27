@@ -36,6 +36,8 @@
     <string name="signal_strength">Signal Strength</string>
     <string name="asu_level">ASU Level</string>
     <string name="unknown">Unknown</string>
+    <string name="date_of_submission">Date of Submission</string>
+    <string name="progress_status">Progress Status</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
     <string name="get_my_requests">Get My Requests</string>
