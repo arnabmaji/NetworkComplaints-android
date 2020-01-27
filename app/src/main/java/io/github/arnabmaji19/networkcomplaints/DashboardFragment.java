@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.location.Address;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -52,8 +51,6 @@ public class DashboardFragment extends Fragment {
     private LinearLayout loadingLayout;
     private TextView latitudeTextView;
     private TextView longitudeTextView;
-    private TextView postalCodeTextView;
-    private TextView stateTextView;
     private Button grantPermissionsButton;
     private Button analyzeButton;
     private Button sendDataButton;
@@ -74,7 +71,7 @@ public class DashboardFragment extends Fragment {
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
@@ -96,8 +93,6 @@ public class DashboardFragment extends Fragment {
         loadingLayout = view.findViewById(R.id.laodingBar);
         latitudeTextView = view.findViewById(R.id.latitudeTextView);
         longitudeTextView = view.findViewById(R.id.longitudeTextView);
-        postalCodeTextView = view.findViewById(R.id.postalCodeTextView);
-        stateTextView = view.findViewById(R.id.stateTextView);
         simDetailsRecyclerView = view.findViewById(R.id.simCardListRecyclerView);
         simDetailsRecyclerView.setLayoutManager(new LinearLayoutManager(activity));
         waitDialog = new WaitDialog(activity);
@@ -139,20 +134,13 @@ public class DashboardFragment extends Fragment {
                         loadingLayout.setVisibility(View.GONE); //hide the loading layout
 
                         //create device report
-                        String postalCode = "Unknown";
-                        String state = "Unknown";
-                        Address address = locationDataManager.getAddress(location);
-                        if (address != null) {
-                            postalCode = address.getPostalCode();
-                            state = address.getAdminArea();
-
-                        }
                         String latitude = location.getLatitude() + "";
                         String longitude = location.getLongitude() + "";
                         List<SimInfo> simInfoList = phoneManager.getSimInfo(activity.getBaseContext());
-                        LocationData locationData = new LocationData(latitude, longitude, postalCode, state);
+                        LocationData locationData = new LocationData(latitude, longitude);
                         deviceReport = new DeviceReport(locationData, simInfoList);
 
+                        //update views for user
                         updateDeviceReportInfo(deviceReport);
 
 
@@ -167,6 +155,19 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (Session.getInstance().isSessionAvailable()) { //if session is available send data
+                    deviceReportAPI.addOnCompleteListener(new DeviceReportAPI.OnCompleteListener() {
+                        @Override
+                        public void onComplete(int statusCode) {
+                            String responseMessage = "";
+                            if (statusCode == DeviceReportAPI.STATUS_CODE_SUCCESFUL) {
+                                responseMessage = "Thank you for your submission!";
+                            } else if (statusCode == DeviceReportAPI.STATUS_CODE_UNSUCCESFUL) {
+                                responseMessage = "Something went wrong!";
+                            }
+
+                            Toast.makeText(activity.getBaseContext(), responseMessage, Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     deviceReportAPI.post();
                     return;
                 }
@@ -206,8 +207,6 @@ public class DashboardFragment extends Fragment {
         //update location details
         latitudeTextView.setText(deviceReport.getLocationData().getLatitude());
         longitudeTextView.setText(deviceReport.getLocationData().getLongitude());
-        postalCodeTextView.setText(deviceReport.getLocationData().getPostalCode());
-        stateTextView.setText(deviceReport.getLocationData().getState());
     }
 
     private void initializeDeviceReportAPI(DeviceReport deviceReport) {
@@ -224,7 +223,7 @@ public class DashboardFragment extends Fragment {
         if (requestCode == PermissionsUtil.PERMISSIONS_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 if (permissionsUtil.areAllPermissionsGranted()) {
-                    layoutToggler.setVisible(dashoardLayout);
+                    layoutToggler.setVisible(localDataAlertLayout);
                 }
             }
         }

@@ -3,18 +3,12 @@ package io.github.arnabmaji19.networkcomplaints.util;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 public class LocationDataManager {
 
@@ -74,20 +68,6 @@ public class LocationDataManager {
                     MINIMUM_LOCATION_REFRESH_DISTANCE,
                     locationListener);
         }
-    }
-
-    public Address getAddress(Location location) {
-        //Returns address info for the current Location
-        Geocoder geocoder = new Geocoder(context, Locale.getDefault());
-        try {
-            List<Address> addressList = geocoder.getFromLocation(location.getLatitude(),
-                    location.getLongitude(),
-                    1);
-            return addressList.get(0);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     public boolean isGPSEnabled() {
