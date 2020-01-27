@@ -13,9 +13,6 @@ import androidx.core.content.ContextCompat;
 
 public class LocationDataManager {
 
-    private final static int MINIMUM_LOCATION_REFRESH_TIME = 1000; //In milliseconds
-    private final static int MINIMUM_LOCATION_REFRESH_DISTANCE = 1; //in meters
-
     private Context context;
     private LocationManager locationManager;
     private LocationListener locationListener;

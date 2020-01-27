@@ -38,9 +38,9 @@
     <string name="unknown">Unknown</string>
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
-    <string name="postal_code">Postal Code</string>
-    <string name="state">State</string>
+    <string name="get_my_requests">Get My Requests</string>
     <string name="send_statistics_data">Send Statistics Data</string>
+    <string name="user_requests_summary">Load your previous requests\n and see status progress!</string>
     <!--    preferences-->
     <string name="clear_log_in_pref_key">clear_log_in_pref_key</string>
     <string name="clear_log_in_pref">Log Out</string>
