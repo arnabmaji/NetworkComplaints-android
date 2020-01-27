@@ -159,9 +159,9 @@ public class DashboardFragment extends Fragment {
                         @Override
                         public void onComplete(int statusCode) {
                             String responseMessage = "";
-                            if (statusCode == DeviceReportAPI.STATUS_CODE_SUCCESFUL) {
+                            if (statusCode == DeviceReportAPI.STATUS_CODE_SUCCESSFUL) {
                                 responseMessage = "Thank you for your submission!";
-                            } else if (statusCode == DeviceReportAPI.STATUS_CODE_UNSUCCESFUL) {
+                            } else if (statusCode == DeviceReportAPI.STATUS_CODE_UNSUCCESSFUL) {
                                 responseMessage = "Something went wrong!";
                             }
 

@@ -18,8 +18,8 @@ public class DeviceReportAPI extends API {
     private static final String RELATIVE_URL = "android/netinfo";
 
     //status codes
-    public static final int STATUS_CODE_SUCCESFUL = 200;
-    public static final int STATUS_CODE_UNSUCCESFUL = 500;
+    public static final int STATUS_CODE_SUCCESSFUL = 200;
+    public static final int STATUS_CODE_UNSUCCESSFUL = 500;
 
     private RequestParams params;
     private String url;

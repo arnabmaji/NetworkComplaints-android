@@ -16,7 +16,13 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
+import org.json.JSONObject;
+
+import cz.msebera.android.httpclient.Header;
 import io.github.arnabmaji19.networkcomplaints.util.Session;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,15 +44,16 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navigation_view);
 
         //code for development use
-//        RequestParams params = new RequestParams("user_id", Session.getInstance().getUserId());
-//        AsyncHttpClient client = new AsyncHttpClient();
-//        client.post("http://192.168.43.54:3000/android/requests", params, new JsonHttpResponseHandler(){
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-//                super.onSuccess(statusCode, headers, response);
-//                Log.d(TAG, "onSuccess: " + response);
-//            }
-//        });
+
+        RequestParams params = new RequestParams("user_id", Session.getInstance().getUserId());
+        AsyncHttpClient client = new AsyncHttpClient();
+        client.post("http://34.203.204.120:3000/android/requests", params, new JsonHttpResponseHandler() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                super.onSuccess(statusCode, headers, response);
+                Log.d(TAG, "onSuccess: " + response);
+            }
+        });
 
         //end of code for development use
 
@@ -63,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
                         selectedFragment = new DashboardFragment(MainActivity.this);
                         break;
 
+                    case R.id.menu_my_requests:
+                        selectedFragment = new RequestsFragment(MainActivity.this);
+                        break;
                     case R.id.menu_settings:
                         startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                         return true;
