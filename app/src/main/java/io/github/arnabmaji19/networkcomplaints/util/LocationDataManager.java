@@ -3,6 +3,7 @@ package io.github.arnabmaji19.networkcomplaints.util;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -42,8 +43,6 @@ public class LocationDataManager {
                 @Override
                 public void onLocationChanged(Location location) {
                     onSuccessListener.onSuccess(location);
-                    locationManager.removeUpdates(locationListener); //disconnect the location listener
-                    //locationManager = null; //set location manager to null
                 }
 
                 @Override
@@ -62,11 +61,11 @@ public class LocationDataManager {
                 }
             };
 
-            //attach the location listener to location manager
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
-                    MINIMUM_LOCATION_REFRESH_TIME,
-                    MINIMUM_LOCATION_REFRESH_DISTANCE,
-                    locationListener);
+            //set up criteria for high accuracy
+            Criteria criteria = new Criteria();
+            criteria.setAccuracy(Criteria.ACCURACY_FINE);
+            //request single location update
+            locationManager.requestSingleUpdate(criteria, locationListener, null);
         }
     }
 

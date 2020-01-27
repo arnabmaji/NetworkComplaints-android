@@ -37,6 +37,19 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.navigation_view);
 
+        //code for development use
+//        RequestParams params = new RequestParams("user_id", Session.getInstance().getUserId());
+//        AsyncHttpClient client = new AsyncHttpClient();
+//        client.post("http://192.168.43.54:3000/android/requests", params, new JsonHttpResponseHandler(){
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+//                super.onSuccess(statusCode, headers, response);
+//                Log.d(TAG, "onSuccess: " + response);
+//            }
+//        });
+
+        //end of code for development use
+
         setupNavigationDrawer(); //configure navigation drawer
         //set navigation view menu selected listener
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {

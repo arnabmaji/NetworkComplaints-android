@@ -5,7 +5,7 @@ import com.loopj.android.http.AsyncHttpClient;
 //Base class for creating other APIs
 public abstract class API {
 
-    private static final String BASE_URL = "http://192.168.43.54:3000/";
+    private static final String BASE_URL = "http://34.203.204.120:3000/";
     protected static final AsyncHttpClient client = new AsyncHttpClient();
 
 
