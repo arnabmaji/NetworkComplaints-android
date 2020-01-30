@@ -56,7 +56,7 @@ public class SettingsActivity extends AppCompatActivity {
                                 .edit()
                                 .clear()
                                 .apply();
-                        Toast.makeText(activity.getBaseContext(), "Log In credentials cleared", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(activity.getBaseContext(), "Log In credentials cleared!", Toast.LENGTH_SHORT).show();
                         return true;
                     }
                 });
@@ -69,9 +69,13 @@ public class SettingsActivity extends AppCompatActivity {
                     public boolean onPreferenceClick(Preference preference) {
                         //clear saved device report
                         LocalDataManager localDataManager = new LocalDataManager(activity);
+                        String message;
                         if (localDataManager.clearLocalData()) {
-                            Toast.makeText(activity.getBaseContext(), "Device Report cleared", Toast.LENGTH_SHORT).show();
+                            message = "Device Report cleared!";
+                        } else {
+                            message = "Nothing to clear!";
                         }
+                        Toast.makeText(activity.getBaseContext(), message, Toast.LENGTH_SHORT).show();
                         return true;
                     }
                 });
