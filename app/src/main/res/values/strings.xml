@@ -12,6 +12,7 @@
     <string name="terms_conditions">I agree to the terms and conditions.</string>
     <string name="contact_number">Contact Number</string>
     <string name="login_signup">Log In or Sign Up</string>
+    <string name="log_out">Log Out</string>
     <string name="sign_up_prompt">Don\'t have an account\nSign up here!</string>
     <string name="dashboard">Dashboard</string>
     <string name="my_requests">My Requests</string>
@@ -45,11 +46,11 @@
     <string name="user_requests_summary">Load your previous requests\n and see status progress!</string>
     <!--    preferences-->
     <string name="clear_log_in_pref_key">clear_log_in_pref_key</string>
-    <string name="clear_log_in_pref">Log Out</string>
-    <string name="clear_log_in_pref_sum">Clear your saved log in credentials</string>
+    <string name="clear_log_in_pref">Clear Credentials</string>
+    <string name="clear_log_in_pref_sum">Delete your saved log in credentials</string>
 
     <string name="clear_device_report_pref_key">clear_device_report_pref_key</string>
     <string name="clear_device_report_pref">Clear Device Report</string>
-    <string name="clear_device_report_pref_sum">Clear your saved device report data</string>
+    <string name="clear_device_report_pref_sum">Delete your saved device report</string>
 
 </resources>

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -16,13 +17,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.navigation.NavigationView;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
-import org.json.JSONObject;
-
-import cz.msebera.android.httpclient.Header;
 import io.github.arnabmaji19.networkcomplaints.util.Session;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,20 +38,6 @@ public class MainActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         navigationView = findViewById(R.id.navigation_view);
 
-        //code for development use
-
-        RequestParams params = new RequestParams("user_id", Session.getInstance().getUserId());
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.post("http://34.203.204.120:3000/android/requests", params, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                Log.d(TAG, "onSuccess: " + response);
-            }
-        });
-
-        //end of code for development use
-
         setupNavigationDrawer(); //configure navigation drawer
         //set navigation view menu selected listener
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -73,9 +54,13 @@ public class MainActivity extends AppCompatActivity {
                     case R.id.menu_my_requests:
                         selectedFragment = new RequestsFragment(MainActivity.this);
                         break;
+
                     case R.id.menu_settings:
                         startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                         return true;
+
+                    case R.id.menu_log_out:
+                        return logOutUserIfSignedIn();
                 }
 
                 if (selectedFragment != null) {
@@ -126,5 +111,23 @@ public class MainActivity extends AppCompatActivity {
             usernameTextView.setText(session.getUsername());
             userEmailTextView.setText(session.getEmail());
         }
+    }
+
+    private boolean logOutUserIfSignedIn() {
+        //log out user
+        Session session = Session.getInstance();
+        String message;
+        boolean isLogOutSuccessful = true;
+        if (session.isSessionAvailable()) {
+            session.clear(); //clear session
+            message = "Successfully logged out";
+            startActivity(new Intent(MainActivity.this, WelcomeActivity.class)); //navigate user to welcome screen
+            finish(); //finish the current activity
+        } else {
+            message = "You're not logged in";
+            isLogOutSuccessful = false;
+        }
+        Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show(); //show message to user
+        return isLogOutSuccessful;
     }
 }

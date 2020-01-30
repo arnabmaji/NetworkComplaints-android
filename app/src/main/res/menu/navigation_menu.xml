@@ -31,4 +31,16 @@
             android:id="@+id/menu_about"
             android:icon="@drawable/ic_people_black_24dp" />
     </group>
+
+    <group
+        android:id="@+id/acc_info_group"
+        android:checkableBehavior="single">
+
+        <item
+            android:title="@string/log_out"
+            android:id="@+id/menu_log_out"
+            android:icon="@drawable/ic_exit_to_app_black_24dp" />
+
+    </group>
+
 </menu>
