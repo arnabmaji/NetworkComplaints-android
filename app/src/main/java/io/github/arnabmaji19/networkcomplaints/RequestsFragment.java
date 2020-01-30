@@ -73,7 +73,7 @@ public class RequestsFragment extends Fragment {
                 userRequestsAPI.addOnCompleteListener(new UserRequestsAPI.OnCompleteListener() {
                     @Override
                     public void onComplete(int statusCode, List<RequestDetails> requestDetailsList) {
-                        RequestListAdapter requestListAdapter = new RequestListAdapter(requestDetailsList);
+                        RequestListAdapter requestListAdapter = new RequestListAdapter(activity, requestDetailsList);
                         requestsRecyclerView.setAdapter(requestListAdapter);
                         layoutToggler.setVisible(userRequestsLayout);
                     }

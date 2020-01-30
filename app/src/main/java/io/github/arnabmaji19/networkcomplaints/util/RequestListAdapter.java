@@ -1,5 +1,6 @@
 package io.github.arnabmaji19.networkcomplaints.util;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,11 @@ import io.github.arnabmaji19.networkcomplaints.model.RequestDetails;
 
 public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.RequestViewHolder> {
 
+    private Context context;
     private List<RequestDetails> requestDetailsList;
 
-    public RequestListAdapter(List<RequestDetails> requestDetailsList) {
+    public RequestListAdapter(Context context, List<RequestDetails> requestDetailsList) {
+        this.context = context;
         this.requestDetailsList = requestDetailsList;
     }
 
@@ -34,7 +37,7 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
     @Override
     public void onBindViewHolder(@NonNull RequestViewHolder holder, int position) {
         //set texts in each row
-        RequestDetails details = requestDetailsList.get(position);
+        final RequestDetails details = requestDetailsList.get(position);
         holder.operatorNameTextView.setText(details.getOperatorName());
         holder.networkTypeTextView.setText(details.getNetworkType());
         holder.signalStrengthTextView.setText(details.getStrength());
@@ -45,6 +48,13 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
         } else {
             holder.progressStatusImageView.setImageResource(R.drawable.not_done);
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                RequestDetailsDialog dialog = new RequestDetailsDialog(context, details);
+                dialog.show();
+            }
+        });
 
     }
 

@@ -53,4 +53,9 @@
     <string name="clear_device_report_pref">Clear Device Report</string>
     <string name="clear_device_report_pref_sum">Delete your saved device report</string>
 
+    <string name="details">Details</string>
+    <string name="request_id">Request ID</string>
+    <string name="request_details">Request Details</string>
+    <string name="operator_details">Operator Details</string>
+
 </resources>

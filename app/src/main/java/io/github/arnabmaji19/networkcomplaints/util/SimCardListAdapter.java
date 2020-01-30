@@ -36,7 +36,7 @@ public class SimCardListAdapter extends RecyclerView.Adapter<SimCardListAdapter.
         //populate recycler view with data
         holder.operatorNameTextView.setText(simInfo.getOperatorName());
         holder.networkTypeTextView.setText(simInfo.getNetworkType());
-        String signalStrength = simInfo.getSignalStrength() + "dbm";
+        String signalStrength = simInfo.getSignalStrength() + " dbm";
         holder.signalStrengthTextView.setText(signalStrength);
         holder.asuLevelTextView.setText(simInfo.getAsuLevel());
     }
