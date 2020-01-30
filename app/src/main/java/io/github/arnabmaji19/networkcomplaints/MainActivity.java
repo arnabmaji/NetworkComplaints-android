@@ -59,6 +59,10 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(new Intent(MainActivity.this, SettingsActivity.class));
                         return true;
 
+                    case R.id.menu_about:
+                        startActivity(new Intent(MainActivity.this, AboutActivity.class));
+                        return true;
+
                     case R.id.menu_log_out:
                         return logOutUserIfSignedIn();
                 }
