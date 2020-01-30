@@ -161,7 +161,7 @@ public class DashboardFragment extends Fragment {
                         public void onComplete(int statusCode) {
                             String responseMessage = "";
                             if (statusCode == DeviceReportAPI.STATUS_CODE_SUCCESSFUL) {
-                                responseMessage = "Thank you for your submission!";
+                                responseMessage = "Thank you for your support!";
                             } else if (statusCode == DeviceReportAPI.STATUS_CODE_UNSUCCESSFUL) {
                                 responseMessage = "Something went wrong!";
                             }
@@ -178,13 +178,12 @@ public class DashboardFragment extends Fragment {
                 AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                 builder
                         .setTitle("Save Device Report")
-                        .setMessage("Looks like you are in offline Mode." +
+                        .setMessage("Looks like you are in Offline Mode." +
                                 "\nWould you like to save device report?")
                         .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 //save device report for future use
-                                localDataManager = new LocalDataManager(activity);
                                 localDataManager.saveDeviceReport(deviceReport);
 
                                 Toast.makeText(activity.getBaseContext(), "Device report saved!", Toast.LENGTH_SHORT).show();

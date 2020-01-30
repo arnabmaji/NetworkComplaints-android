@@ -10,7 +10,7 @@
     <string name="remember_login">Remember Log In Credentials</string>
     <string name="username">Username</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="terms_conditions">I agree to the terms and conditions.</string>
+    <string name="terms_conditions">I agree to the terms and conditions</string>
     <string name="contact_number">Contact Number</string>
     <string name="login_signup">Log In or Sign Up</string>
     <string name="log_out">Log Out</string>
@@ -26,11 +26,11 @@
     <string name="nav_header_user_email">anonymous@mail.com</string>
     <string name="nav_header_user_icon">User Icon</string>
     <string name="user_greet">Hey there!</string>
-    <string name="ask_permissions">Before we get started,\nwe need some permissions\nto analyze your phone and location.</string>
-    <string name="ask_permission_2">Don\'t worry!\nThis doesn\'t include any private data.</string>
+    <string name="ask_permissions">Before we get started,\nwe need some permissions\nto analyze your phone and location</string>
+    <string name="ask_permission_2">Don\'t worry!\nThis doesn\'t include any private data</string>
     <string name="grant_permissions">Grant Permissions</string>
     <string name="analyze_device">Analyze Device</string>
-    <string name="local_data_not_found">Oops! We didn\'t find any saved data!\nTry analyzing your device.</string>
+    <string name="local_data_not_found">Oops! We didn\'t find any saved data!\nTry analyzing your device</string>
     <string name="sim_details">Sim Details</string>
     <string name="location_details">Location Details</string>
     <string name="operator_name">Operator Name</string>

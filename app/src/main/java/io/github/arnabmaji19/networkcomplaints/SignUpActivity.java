@@ -47,7 +47,7 @@ public class SignUpActivity extends AppCompatActivity {
         String email = emailEditText.getText().toString();
         String contactNumber = phoneEditText.getText().toString();
         String password = passwordEditText.getText().toString();
-        String confirmPassword = confirmPasswordEditText.getText().toString();
+        final String confirmPassword = confirmPasswordEditText.getText().toString();
 
         //validate user info
 
@@ -61,26 +61,27 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         if (!Validations.isEmailValid(email)) { //validate email
-            Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show();
+            emailEditText.setError("Invalid Email");
             return;
         }
 
         if (!Validations.isContactNumberValid(contactNumber)) { //validate contact number
-            Toast.makeText(this, "Invalid Contact Number", Toast.LENGTH_SHORT).show();
+            phoneEditText.setError("Invalid Contact Number");
             return;
         }
 
         if (!Validations.isPasswordValid(password)) { //validate password
             passwordEditText.setError("Password must contain at least one digit, " +
                     "one upper case, " +
-                    "one lower, " +
+                    "one lower case, " +
                     "one special character " +
                     "and must be 8 to 32 characters long");
             return;
         }
 
         if (!password.equals(confirmPassword)) { //check if two password matched
-            Toast.makeText(this, "Passwords don't match", Toast.LENGTH_SHORT).show();
+            passwordEditText.setError("Passwords don't match");
+            confirmPasswordEditText.setError("Passwords don't match");
             return;
         }
 
@@ -106,7 +107,16 @@ public class SignUpActivity extends AppCompatActivity {
                 //further coding
                 String message = "";
                 if (statusCode == SignUpAPI.STATUS_CODE_SUCCESSFUL) {
-                    message = "Account creation successful";
+                    message = "Successfully created new account";
+
+                    //clear all form fields
+                    usernameEditText.getText().clear();
+                    emailEditText.getText().clear();
+                    phoneEditText.getText().clear();
+                    passwordEditText.getText().clear();
+                    confirmPasswordEditText.getText().clear();
+                    termsConditionsCheckBox.setChecked(false);
+
                 } else if (statusCode == SignUpAPI.STATUS_CODE_EMAIL_ALREADY_REGISTERED) {
                     message = "Email already registered";
                 } else if (statusCode == SignUpAPI.STATUS_CODE_FAILED) {
