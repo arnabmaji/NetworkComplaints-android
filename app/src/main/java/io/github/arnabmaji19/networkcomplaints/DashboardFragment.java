@@ -162,6 +162,9 @@ public class DashboardFragment extends Fragment {
                             String responseMessage = "";
                             if (statusCode == DeviceReportAPI.STATUS_CODE_SUCCESSFUL) {
                                 responseMessage = "Thank you for your support!";
+                                //clear saved device report (if available) on successful submission
+                                if (localDataManager.isLocalDataAvailable())
+                                    localDataManager.clearLocalData();
                             } else if (statusCode == DeviceReportAPI.STATUS_CODE_UNSUCCESSFUL) {
                                 responseMessage = "Something went wrong!";
                             }
