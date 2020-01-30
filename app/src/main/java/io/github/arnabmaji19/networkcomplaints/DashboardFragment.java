@@ -155,6 +155,7 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (Session.getInstance().isSessionAvailable()) { //if session is available send data
+                    waitDialog.show();
                     deviceReportAPI.addOnCompleteListener(new DeviceReportAPI.OnCompleteListener() {
                         @Override
                         public void onComplete(int statusCode) {
@@ -164,10 +165,11 @@ public class DashboardFragment extends Fragment {
                             } else if (statusCode == DeviceReportAPI.STATUS_CODE_UNSUCCESSFUL) {
                                 responseMessage = "Something went wrong!";
                             }
-
+                            waitDialog.hide();
                             Toast.makeText(activity.getBaseContext(), responseMessage, Toast.LENGTH_SHORT).show();
                         }
                     });
+
                     deviceReportAPI.post();
                     return;
                 }
