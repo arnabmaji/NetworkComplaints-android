@@ -67,13 +67,13 @@ public class LogInActivity extends AppCompatActivity {
 
         //check if email is in valid format
         if (!Validations.isEmailValid(email)) {
-            Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show();
+            emailEditText.setError("Invalid Email");
             return;
         }
 
         //check if password is in valid format
         if (!Validations.isPasswordValid(password)) {
-            Toast.makeText(this, "Invalid Password", Toast.LENGTH_SHORT).show();
+            passwordEditText.setError("Invalid Password");
             return;
         }
 
