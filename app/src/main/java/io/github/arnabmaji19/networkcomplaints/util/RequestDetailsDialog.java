@@ -3,6 +3,7 @@ package io.github.arnabmaji19.networkcomplaints.util;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -30,6 +31,8 @@ public class RequestDetailsDialog extends Dialog {
         //link and update text views of the dialog
         ((TextView) findViewById(R.id.dialogRequestIdTextView)).setText(requestDetails.getId());
         ((TextView) findViewById(R.id.dialogSubmissionDateTextView)).setText(requestDetails.getSubmissionDate());
+        TextView resolvedDateHeaderTextView = findViewById(R.id.dialogResolvedDateHeader);
+        TextView resolvedDateTextView = findViewById(R.id.dialogResolvedDateTextView);
         ((TextView) findViewById(R.id.dialogLatitudeTextView)).setText(requestDetails.getLatitude());
         ((TextView) findViewById(R.id.dialogLongitudeTextView)).setText(requestDetails.getLongitude());
         ((TextView) findViewById(R.id.dialogOperatorNameTextView)).setText(requestDetails.getOperatorName());
@@ -40,8 +43,13 @@ public class RequestDetailsDialog extends Dialog {
 
         ImageView progressStatusImageView = findViewById(R.id.dialogProgressStatusImageView);
         if (requestDetails.getStatus() == 0) {
+            //if it is not done then hide resolve date fields
+            resolvedDateHeaderTextView.setVisibility(View.GONE);
+            resolvedDateTextView.setVisibility(View.GONE);
             progressStatusImageView.setImageResource(R.drawable.not_done);
         } else {
+            //if it is done then show resolved date
+            resolvedDateTextView.setText(requestDetails.getResolved_date());
             progressStatusImageView.setImageResource(R.drawable.done);
         }
 

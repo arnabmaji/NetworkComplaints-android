@@ -64,6 +64,19 @@
             android:layout_height="wrap_content"
             android:text="@string/unknown" />
 
+        <TextView
+            android:id="@+id/dialogResolvedDateHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/resolved_date"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/dialogResolvedDateTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/unknown" />
+
     </LinearLayout>
 
     <LinearLayout

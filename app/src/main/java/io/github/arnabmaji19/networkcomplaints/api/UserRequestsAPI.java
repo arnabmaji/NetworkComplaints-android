@@ -42,7 +42,6 @@ public class UserRequestsAPI extends API {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
-
                 //extract request details list from response
                 Gson gson = new Gson();
                 JsonResponse jsonResponse = gson.fromJson(response.toString(), JsonResponse.class);

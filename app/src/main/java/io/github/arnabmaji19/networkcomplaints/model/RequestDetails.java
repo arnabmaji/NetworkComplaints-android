@@ -11,12 +11,13 @@ public class RequestDetails {
     private String networkType;
     private String operatorName;
     private String submissionDate;
+    private String resolved_date;
     private int status;
 
     public RequestDetails() {
     }
 
-    public RequestDetails(String id, String userid, String latitude, String longitude, String asuLevel, String strength, String networkType, String operatorName, String submissionDate, int status) {
+    public RequestDetails(String id, String userid, String latitude, String longitude, String asuLevel, String strength, String networkType, String operatorName, String submissionDate, String resolved_date, int status) {
         this.id = id;
         this.userid = userid;
         this.latitude = latitude;
@@ -26,6 +27,7 @@ public class RequestDetails {
         this.networkType = networkType;
         this.operatorName = operatorName;
         this.submissionDate = submissionDate;
+        this.resolved_date = resolved_date;
         this.status = status;
     }
 
@@ -107,5 +109,13 @@ public class RequestDetails {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getResolved_date() {
+        return resolved_date;
+    }
+
+    public void setResolved_date(String resolved_date) {
+        this.resolved_date = resolved_date;
     }
 }

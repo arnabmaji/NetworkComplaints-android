@@ -19,6 +19,7 @@
     <string name="my_requests">My Requests</string>
     <string name="about">About</string>
     <string name="settings">Settings</string>
+    <string name="resolved_date">Resolved Date</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="please_wait">Please Wait&#8230;</string>
